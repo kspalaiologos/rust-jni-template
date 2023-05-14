@@ -1,5 +1,9 @@
 package palaiologos.example;
 
+import static palaiologos.example.NativeLibrary.*;
+
+import java.io.IOException;
+
 class Example {
     static {
         try {

@@ -9,7 +9,7 @@ class Example {
         }
     }
     
-    public static native void printHi(void);
+    public static native void printHi();
 
     public static void main(String[] args) {
         printHi();

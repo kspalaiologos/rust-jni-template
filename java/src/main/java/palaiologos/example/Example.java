@@ -13,6 +13,9 @@ class Example {
 
     public static void main(String[] args) {
         printHi();
+        
+        ExampleManagedObject obj = new ExampleManagedObject("some message", 42);
+        System.out.println(obj.frobnicate());
     }
 }
 

@@ -1,0 +1,22 @@
+[package]
+name = "rust-jni-template"
+version = "1.0.0"
+edition = "2021"
+license = "CC0-1.0"
+
+[profile.release]
+strip = true
+opt-level = 3
+lto = true
+panic = "abort"
+debug-assertions = false
+overflow-checks = false
+debug = false
+
+[dependencies]
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+unwind-stubs = []

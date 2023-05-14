@@ -1,5 +1,10 @@
 package palaiologos.example;
 
+import java.lang.ref.Cleaner;
+import static palaiologos.example.NativeLibrary.*;
+
+import java.io.IOException;
+
 class ExampleManagedObject {
     static {
         try {

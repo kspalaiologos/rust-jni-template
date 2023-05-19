@@ -295,7 +295,6 @@ jobs:
         memory: 12G
         cpu_count: 3
         run: |
-          yes | sudo pkg install llvm
           curl https://sh.rustup.rs -sSf | sh -s -- -y
           source "$HOME/.cargo/env"
           cargo build --verbose --release --features unwind-stubs

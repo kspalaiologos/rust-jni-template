@@ -218,8 +218,8 @@ jobs:
     - name: Build
       run: |
         export LIBZ_SYS_STATIC=1
-        export CC=o64-clang
-        export CXX=o64-clang++
+        export CC="aarch64-apple-darwin21.4-clang -arch arm64e"
+        export CXX="aarch64-apple-darwin21.4-clang++ -arch arm64e"
         cargo build --release --target aarch64-apple-darwin --features unwind-stubs
         cp target/aarch64-apple-darwin/release/*.dylib darwin-aarch64.dylib
     - name: Upload Artifact

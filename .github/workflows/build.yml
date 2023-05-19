@@ -227,6 +227,29 @@ jobs:
       with:
         name: darwin-aarch64.dylib
         path: darwin-aarch64.dylib
+  build-x86_64-netbsd:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run in x86_64 NetBSD.
+      uses: cross-platform-actions/action@v0.13.0
+      with:
+        operating_system: netbsd
+        architecture: x86-64
+        version: 9.2
+        shell: bash
+        memory: 5G
+        cpu_count: 4
+        run: |
+          sudo pkgin -y install clang
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          cargo build --verbose --release --features unwind-stubs
+          cp target/release/*.so netbsd-amd64.so
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: netbsd-amd64.so
+        path: netbsd-amd64.so
   build-x86_64-mingw:
     runs-on: ubuntu-latest
     steps:

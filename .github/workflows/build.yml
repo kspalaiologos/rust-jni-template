@@ -243,6 +243,7 @@ jobs:
         run: |
           sudo pkgin -y install clang mozilla-rootcerts-openssl
           curl https://sh.rustup.rs -sSf | sh -s -- -y
+          source "$HOME/.cargo/env"
           cargo build --verbose --release --features unwind-stubs
           cp target/release/*.so netbsd-amd64.so
     - name: Upload Artifact

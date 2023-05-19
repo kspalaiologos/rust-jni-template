@@ -192,7 +192,10 @@ jobs:
         osx-version: "12.3"
     - name: Build
       run: |
-        CC=x86_64-apple-darwin-gcc RUSTFLAGS="-C linker=x86_64-apple-gcc" cargo build --release --target x86_64-apple-darwin --features unwind-stubs
+        export LIBZ_SYS_STATIC=1
+        export CC=o64-clang
+        export CXX=o64-clang++
+        cargo build --release --target x86_64-apple-darwin --features unwind-stubs
         cp target/x86_64-apple-darwin/release/*.dylib darwin-amd64.dylib
     - name: Upload Artifact
       uses: actions/upload-artifact@v3.1.1

@@ -242,7 +242,7 @@ jobs:
         cpu_count: 4
         run: |
           sudo pkgin -y install clang
-          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          curl https://sh.rustup.rs -sSfk | sh -s -- -y
           cargo build --verbose --release --features unwind-stubs
           cp target/release/*.so netbsd-amd64.so
     - name: Upload Artifact

@@ -202,7 +202,7 @@ jobs:
       with:
         name: darwin-x86_64.dylib
         path: darwin-x86_64.dylib
-  build-i686-darwin:
+  build-aarch64-darwin:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -210,23 +210,23 @@ jobs:
       run: |
         curl https://sh.rustup.rs -sSf | sh -s -- -y
         sudo apt update -y && sudo apt upgrade -y
-        rustup target add i686-apple-darwin
+        rustup target add aarch64-apple-darwin
     - uses: mbround18/setup-osxcross@v1
       # This builds executables & sets env variables for rust to consume.
       with:
-        osx-version: "10.3"
+        osx-version: "12.3"
     - name: Build
       run: |
         export LIBZ_SYS_STATIC=1
-        export CC=o32-clang
-        export CXX=o32-clang++
-        cargo build --release --target i686-apple-darwin --features unwind-stubs
-        cp target/i686-apple-darwin/release/*.dylib darwin-i386.dylib
+        export CC=o64-clang
+        export CXX=o64-clang++
+        cargo build --release --target aarch64-apple-darwin --features unwind-stubs
+        cp target/aarch64-apple-darwin/release/*.dylib darwin-aarch64.dylib
     - name: Upload Artifact
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: darwin-i386.dylib
-        path: darwin-i386.dylib
+        name: darwin-aarch64.dylib
+        path: darwin-aarch64.dylib
   build-x86_64-mingw:
     runs-on: ubuntu-latest
     steps:
@@ -267,7 +267,7 @@ jobs:
         path: win-x86.dll
   build-jar:
     runs-on: ubuntu-latest
-    needs: [build-x86_64-darwin, build-i686-mingw, build-x86_64-mingw, build-powerpc64le-linux, build-powerpc64-linux, build-riscv64-linux, build-mips64-linux, build-armhf-linux, build-i686-linux, build-s390x-linux, build-arm64-linux, build-x86_64-linux]
+    needs: [build-x86_64-darwin, build-aarch64-darwin, build-i686-mingw, build-x86_64-mingw, build-powerpc64le-linux, build-powerpc64-linux, build-riscv64-linux, build-mips64-linux, build-armhf-linux, build-i686-linux, build-s390x-linux, build-arm64-linux, build-x86_64-linux]
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3

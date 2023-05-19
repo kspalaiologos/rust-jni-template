@@ -279,6 +279,32 @@ jobs:
       with:
         name: freebsd-amd64.so
         path: freebsd-amd64.so
+  build-x86_64-openbsd:
+    # ubuntu vs macos doesn't matter.
+    # default macos runners have more RAM and cores.
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run in x86_64 FreeBSD.
+      uses: cross-platform-actions/action@v0.13.0
+      with:
+        operating_system: openbsd
+        architecture: x86-64
+        version: 7.3
+        shell: bash
+        memory: 12G
+        cpu_count: 3
+        run: |
+          yes | sudo pkg install llvm
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          source "$HOME/.cargo/env"
+          cargo build --verbose --release --features unwind-stubs
+          cp target/release/*.so openbsd-amd64.so
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: openbsd-amd64.so
+        path: openbsd-amd64.so
   build-x86_64-mingw:
     runs-on: ubuntu-latest
     steps:
@@ -319,7 +345,7 @@ jobs:
         path: win-x86.dll
   build-jar:
     runs-on: ubuntu-latest
-    needs: [build-x86_64-netbsd, build-x86_64-darwin, build-aarch64-darwin, build-i686-mingw, build-x86_64-mingw, build-powerpc64le-linux, build-powerpc64-linux, build-riscv64-linux, build-mips64-linux, build-armhf-linux, build-i686-linux, build-s390x-linux, build-arm64-linux, build-x86_64-linux]
+    needs: [build-x86_64-openbsd, build-x86_64-freebsd, build-x86_64-netbsd, build-x86_64-darwin, build-aarch64-darwin, build-i686-mingw, build-x86_64-mingw, build-powerpc64le-linux, build-powerpc64-linux, build-riscv64-linux, build-mips64-linux, build-armhf-linux, build-i686-linux, build-s390x-linux, build-arm64-linux, build-x86_64-linux]
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3

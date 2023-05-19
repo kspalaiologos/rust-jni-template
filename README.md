@@ -17,6 +17,9 @@ Currently:
 - i686 Windows
 - x86_64 MacOS/Darwin
 - aarch64 MacOS/Darwin
+- x86_64 FreeBSD
+- x86_64 NetBSD
+- x86_64 OpenBSD
 
 ## FAQ
 

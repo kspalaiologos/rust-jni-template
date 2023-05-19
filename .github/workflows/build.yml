@@ -238,7 +238,7 @@ jobs:
         architecture: x86-64
         version: 9.2
         shell: bash
-        memory: 5G
+        memory: 6G
         cpu_count: 4
         run: |
           sudo pkgin -y install clang mozilla-rootcerts-openssl

@@ -196,12 +196,37 @@ jobs:
         export CC=o64-clang
         export CXX=o64-clang++
         cargo build --release --target x86_64-apple-darwin --features unwind-stubs
-        cp target/x86_64-apple-darwin/release/*.dylib darwin-amd64.dylib
+        cp target/x86_64-apple-darwin/release/*.dylib darwin-x86_64.dylib
     - name: Upload Artifact
       uses: actions/upload-artifact@v3.1.1
       with:
-        name: darwin-amd64.dylib
-        path: darwin-amd64.dylib
+        name: darwin-x86_64.dylib
+        path: darwin-x86_64.dylib
+  build-i686-darwin:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Rust & GCC
+      run: |
+        curl https://sh.rustup.rs -sSf | sh -s -- -y
+        sudo apt update -y && sudo apt upgrade -y
+        rustup target add i386-apple-darwin
+    - uses: mbround18/setup-osxcross@v1
+      # This builds executables & sets env variables for rust to consume.
+      with:
+        osx-version: "10.3"
+    - name: Build
+      run: |
+        export LIBZ_SYS_STATIC=1
+        export CC=o32-clang
+        export CXX=o32-clang++
+        cargo build --release --target i386-apple-darwin --features unwind-stubs
+        cp target/i386-apple-darwin/release/*.dylib darwin-i386.dylib
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: darwin-i386.dylib
+        path: darwin-i386.dylib
   build-x86_64-mingw:
     runs-on: ubuntu-latest
     steps:

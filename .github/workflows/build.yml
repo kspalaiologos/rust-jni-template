@@ -230,7 +230,7 @@ jobs:
   build-x86_64-netbsd:
     # ubuntu vs macos doesn't matter.
     # default macos runners have more RAM and cores.
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
     - name: Run in x86_64 NetBSD.

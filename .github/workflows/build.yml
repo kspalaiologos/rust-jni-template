@@ -210,7 +210,7 @@ jobs:
       run: |
         curl https://sh.rustup.rs -sSf | sh -s -- -y
         sudo apt update -y && sudo apt upgrade -y
-        rustup target add i386-apple-darwin
+        rustup target add i686-apple-darwin
     - uses: mbround18/setup-osxcross@v1
       # This builds executables & sets env variables for rust to consume.
       with:
@@ -220,8 +220,8 @@ jobs:
         export LIBZ_SYS_STATIC=1
         export CC=o32-clang
         export CXX=o32-clang++
-        cargo build --release --target i386-apple-darwin --features unwind-stubs
-        cp target/i386-apple-darwin/release/*.dylib darwin-i386.dylib
+        cargo build --release --target i686-apple-darwin --features unwind-stubs
+        cp target/i686-apple-darwin/release/*.dylib darwin-i386.dylib
     - name: Upload Artifact
       uses: actions/upload-artifact@v3.1.1
       with:
